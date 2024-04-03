@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Branches Form</title>
+</head>
+<body>
+<div layout:fragment="customContent">
+    <form action="#" th:action="@{/branches/formProcess}" th:object="${branches}" method="POST">
+        <input type="hidden" th:field="*{bId}" />
+        <div th:if="${#fields.hasAnyErrors()}">
+            <ul>
+                <li th:each="errMsg : ${#fields.allErrors()}" th:text="${errMsg}" th:class="text-danger" />
+            </ul>
+        </div>        
+        <div class="form-group">
+            <label for="branchCode">Branch Code</label>
+            <input type="text" class="form-control" id="branchCode" placeholder="Branch Code" th:field="*{branchCode}">
+            <span th:if="${#fields.hasErrors('branchCode')}" th:errors="*{branchCode}" th:errorclass="text-danger">Branch Code Error</span>
+        </div>
+        <div class="form-group">
+            <label for="branchName">Branch Name</label>
+            <input type="text" class="form-control" id="branchName" placeholder="Branch Name" th:field="*{branchName}">
+            <span th:if="${#fields.hasErrors('branchName')}" th:errors="*{branchName}" th:errorclass="text-danger">Branch Name Error</span>
+        </div>
+        <div class="form-group">
+            <label for="totalSeats"># of Seat</label>
+            <input type="number" class="form-control" id="totalSeats" placeholder="# of Seat" th:field="*{totalSeats}">
+            <span th:if="${#fields.hasErrors('totalSeats')}" th:errors="*{totalSeats}" th:errorclass="text-danger"># of Seat Error</span>
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button> &nbsp;&nbsp;&nbsp;
+        <a href="#" th:href="@{/branches/index}" class="btn btn-warning">Back</a>
+    </form>
+</div>
+</body>
+</html>

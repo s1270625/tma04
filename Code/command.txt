@@ -1,0 +1,13 @@
+az login --use-device-code
+az account set --subscription 7cb8d6ec-d2f4-4ab3-a684-2546a8b68eb5
+
+cd ./webportal
+mvn clean package -D maven.test.skip=true
+
+cd ../terraform
+
+terraform init
+terraform plan -out main.tfplan
+terraform apply main.tfplan
+
+az webapp deploy --resource-group comps368-tma04 --name s1270625webportal --type jar --src-path ../webportal/target/webportal-1.0.jar

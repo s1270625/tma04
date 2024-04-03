@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Item List</title>
+</head>
+<body>
+<section layout:fragment="customContent">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-2">
+            <a href="#" th:href="@{/items/create}" class="btn btn-primary">Create</a>         
+        </div>
+    </div>    
+    <table class="table table-striped">
+        <tr>
+            <th>#</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="item : ${allItems}">
+            <td th:text="${item.itemId}" />
+            <td th:text="${item.itemCode}" />
+            <td th:text="${item.itemName}" />
+            <td th:text="${item.itemCategory.icName}" />
+            <td>
+                <a th:href="@{/items/edit/{id}(id = ${item.itemId})}" class="btn btn-primary">Edit</a> &nbsp; | &nbsp;
+                <a th:href="@{/items/delete/{id}(id = ${item.itemId})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    </table>
+</section>
+</body>
+</html>

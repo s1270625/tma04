@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Item Category Form</title>
+</head>
+<body>
+<div layout:fragment="customContent">
+    <form action="#" th:action="@{/itemCategories/formProcess}" th:object="${itemCategory}" method="POST">
+        <input type="hidden" th:field="*{icId}" />
+        <div th:if="${#fields.hasAnyErrors()}">
+            <ul>
+                <li th:each="errMsg : ${#fields.allErrors()}" th:text="${errMsg}" th:class="text-danger" />
+            </ul>
+        </div>        
+        <div class="form-group">
+            <label for="icCode">Category Code</label>
+            <input type="text" class="form-control" id="icCode" placeholder="Category Code" th:field="*{icCode}">
+            <span th:if="${#fields.hasErrors('icCode')}" th:errors="*{icCode}" th:errorclass="text-danger">Category Code Error</span>
+        </div>
+        <div class="form-group">
+            <label for="icName">Category Name</label>
+            <input type="text" class="form-control" id="icName" placeholder="Category Name" th:field="*{icName}">
+            <span th:if="${#fields.hasErrors('icName')}" th:errors="*{icName}" th:errorclass="text-danger">Category Name Error</span>
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button> &nbsp;&nbsp;&nbsp;
+        <a href="#" th:href="@{/itemCategories/index}" class="btn btn-warning">Back</a>
+    </form>
+</div>
+</body>
+</html>

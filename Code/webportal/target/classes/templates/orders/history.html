@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Order History</title>
+</head>
+<body>
+<style>
+    .firstColumn {
+        font-weight: bold;
+    }
+</style>
+<div layout:fragment="customContent">
+    <table class="table col-md-6">
+        <tr>
+            <th class="firstColumn" id="orderId">#</th>
+            <td th:text="${allOrders.oId}" />
+        </tr>
+        <tr>
+            <th class="firstColumn" id="branchName">Branch Name</th>
+            <td th:text="${allOrders.branch.branchName}" />
+        </tr>
+        <tr>
+            <th class="firstColumn" id="createDtm">Date</th>
+            <td th:text="${allOrders.createDtm}" />
+        </tr> 
+        <tr>
+            <td colspan="2">
+                <img th:src="'https://api.qrcode-monkey.com/qr/custom?size=100&&data=' + ${allOrders.qrCode}" th:alt="${allOrders.qrCode}" />
+            </td>
+        </tr>
+    </table>
+    <table class="table table-striped col-md-6" style="margin-top:25px;">
+        <tr th:each="detail : ${allOrders.details}">
+            <th th:text="${detail.items.itemName}" class="col-md-6" />
+            <td th:text="${detail.qty}" class="col-md-6" />
+        </tr>                                    
+    </table>
+</div>
+</body>
+</html>

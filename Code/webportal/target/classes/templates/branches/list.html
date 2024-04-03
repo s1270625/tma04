@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Branches List</title>
+</head>
+<body>
+<section layout:fragment="customContent">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-2">
+            <a href="#" th:href="@{/branches/create}" class="btn btn-primary">Create</a>         
+        </div>
+    </div>    
+    <table class="table table-striped">
+        <tr>
+            <th>#</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th># of seat</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="branch : ${allBranches}">
+            <td th:text="${branch.bId}" />
+            <td th:text="${branch.branchCode}" />
+            <td th:text="${branch.branchName}" />
+            <td th:text="${branch.totalSeats}" />
+            <td>
+                <a th:href="@{/branches/edit/{id}(id = ${branch.bId})}" class="btn btn-primary">Edit</a> &nbsp; | &nbsp;
+                <a th:href="@{/branches/delete/{id}(id = ${branch.bId})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    </table>
+</section>
+</body>
+</html>

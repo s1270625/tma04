@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Item List</title>
+</head>
+<body>
+<section layout:fragment="customContent">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-2">
+            <form action="#" th:action="@{/uam/index}" th:object="${userRoles}" method="POST">
+                <input type="hidden" th:field="*{userid}" />
+                <div th:if="${#fields.hasAnyErrors()}">
+                    <ul>
+                        <li th:each="errMsg : ${#fields.allErrors()}" th:text="${errMsg}" th:class="text-danger" />
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label for="usrCode">User Code</label>
+                    <input type="text" class="form-control" id="usrCode" placeholder="User Code" th:field="*{usrCode}">
+                    <span th:if="${#fields.hasErrors('usrCode')}" th:errors="*{usrCode}" th:errorclass="text-danger">User Code Error</span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="text" class="form-control" id="password" placeholder="Password">
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:errorclass="text-danger">Password Error</span>
+                </div>
+                <div class="form-group">
+                    <label for="name">User Display Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="User Display Name" th:field="*{name}">
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="text-danger">User Display Name Error</span>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" th:field="*{isActive}" id="IsActiveT" th:value="true" th:checked="*{isActive == true}">True
+                    <label class="form-check-label" for="IsActiveT"></label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio" class="form-check-input" th:field="*{isActive}" id="IsActiveF" th:value="false"" th:checked="*{isActive == false}">False
+                    <label class="form-check-label" for="IsActiveF"></label>
+                  </div>   
+                <button type="submit" class="btn btn-primary">Send</button> &nbsp;&nbsp;&nbsp;
+                <a href="#" th:href="@{/uam/index}" class="btn btn-warning">Back</a>
+            </form>       
+        </div>
+    </div>    
+    <table class="table table-striped">
+        <tr>
+            <th>#</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Is Active</th>
+            <th># of roles</th>
+        </tr>
+        <tr th:each="user : ${allUsers}">
+            <td th:text="${user.userid}" />
+            <td th:text="${user.usrcode}" />
+            <td th:text="${user.name}" />
+            <td>
+                <a th:href="@{/uam/index/statusChange/{id}(id = ${user.userid})}">
+                    <span th:text="${user.isActive}" />
+                </a>
+            </td>
+            <td th:text="${user.roles.size()}" />
+            <td>
+                <a th:href="@{/uam/index/edit/{id}(id = ${user.userid})}" class="btn btn-primary">Edit</a> &nbsp; | &nbsp;
+            </td>
+        </tr>
+    </table>
+</section>
+</body>
+</html>

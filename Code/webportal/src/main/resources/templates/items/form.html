@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Item Form</title>
+</head>
+<body>
+<div layout:fragment="customContent">
+    <form action="#" th:action="@{/items/formProcess}" th:object="${items}" method="POST">
+        <input type="hidden" th:field="*{itemId}" />
+        <div th:if="${#fields.hasAnyErrors()}">
+            <ul>
+                <li th:each="errMsg : ${#fields.allErrors()}" th:text="${errMsg}" th:class="text-danger" />
+            </ul>
+        </div>        
+        <div class="form-group">
+            <label for="itemCode">Items Code</label>
+            <input type="text" class="form-control" id="itemCode" placeholder="Items Code" th:field="*{itemCode}">
+            <span th:if="${#fields.hasErrors('itemCode')}" th:errors="*{itemCode}" th:errorclass="text-danger">Items Code Error</span>
+        </div>
+        <div class="form-group">
+            <label for="itemName">Items Name</label>
+            <input type="text" class="form-control" id="itemName" placeholder="Items Name" th:field="*{itemName}">
+            <span th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}" th:errorclass="text-danger">Items Name Error</span>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Item Category</label>
+            <select class="form-control" id="itemCategory" th:field="${items.itemCategory}">
+                <option th:each="category : ${categoriesList}"
+                        th:value="${category.icId}"
+                        th:text="${category.icName}">
+                </option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button> &nbsp;&nbsp;&nbsp;
+        <a href="#" th:href="@{/items/index}" class="btn btn-warning">Back</a>
+    </form>
+</div>
+</body>
+</html>
